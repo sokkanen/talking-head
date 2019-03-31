@@ -37,6 +37,8 @@ const onMessageHandler = (target, context, msg, self) => {
         message = toTheHead
         if (message === 'tj'){
             message = 'Chief executive officer.'
+        } else if (message.length > 150){
+            message = 'Wow. Over 150 characters. Are you going to make me crash?'
         }
         console.log('Sending: ', message)
         io.emit('message', message)
