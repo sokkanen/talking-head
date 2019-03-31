@@ -1,16 +1,55 @@
 require('dotenv').config()
 const io = require('socket.io')()
-const bot = require('./bot')
-let msg = '' // TÄHÄN MUUTTUJAAN BOTILTA TULEVA VIESTI
+const tmi = require('tmi.js')
 
 const PORT = process.env.PORT
+const CHANNELNAME = process.env.CHANNELNAME
+const BOT_USERNAME = process.env.BOT_USERNAME
+const BOT_TOKEN = process.env.BOT_TOKEN
 
-io.on('connection', socket => {
-    console.log('Connected')
-    setInterval(() => {
-        socket
-        .emit('message', msg)
-    }, 1000);
+const options = {
+    identity: {
+        username: BOT_USERNAME,
+        password: BOT_TOKEN
+    },
+    channels: [
+        CHANNELNAME
+    ]
+}
+
+const client = new tmi.client(options)
+let message = ''
+
+const onMessageHandler = (target, context, msg, self) => {
+    if (self){
+        return
+    } else if (msg.length < 5){
+        return
+    }
+
+    const command = msg.substring(0, 4)
+    const toTheHead = msg.substring(5, msg.length)
+
+    if (command === '!paa'){
+        message = toTheHead
+        console.log('Sending: ', message)
+        io.emit('message', message)
+    } 
+}
+
+const onConnectionHandler = (addr, port) => {
+    console.log('Connected to ', addr, port)
+}
+
+client.on('message', onMessageHandler)
+client.on('connected', onConnectionHandler)
+client.connect()
+
+io.on('connection', (socket) => {
+    console.log('Front connected')
+    socket.on('disconnect', ()=> {
+        console.log('Front disconnected')
+    })
 })
 
 io.listen(PORT)

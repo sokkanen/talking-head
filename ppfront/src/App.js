@@ -6,19 +6,16 @@ import Speech from 'speak-tts'
 
 const App = () => {
 
-  const [message, setMessage] = useState('')
   const [image, setImage] = useState(nottalking)
-  const socket = socketClient('http://localhost:3003')
+  const [activated, setActivated] = useState(false)
+  const socket = socketClient('http://localhost:3003/')
   const speech = new Speech()
 
   useEffect(() => {
     initializeSpeech()
-  }, [])
-
-  useEffect(() => {
     socket.on('message', (msg) => {
-      console.log(msg)
-      speak(msg)
+      console.log('Head: ', msg)
+        speak(msg)
     })
   }, [])
 
@@ -45,15 +42,17 @@ const App = () => {
   })
   }
 
-  const messageHandler = (event) => {
-    event.preventDefault()
-    setMessage(event.target.value)
+  const activateSpeech = () => {
+    console.log('Speech activated')
+    setActivated(true)
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    setMessage('')
-    speak()
+  const ActivateButton = () => {
+      return (
+        <div>
+          <button onClick={activateSpeech}>Activate Speech</button> 
+        </div>
+      )
   }
 
   const Smiley = () => {
@@ -64,13 +63,25 @@ const App = () => {
     )
   }
 
+  const Contents = () => {
+    if (activated === true){
+      return (
+        <div>
+        <Smiley/>
+        </div>
+      )
+    }
+    return (
+      <div>
+        <Smiley/>
+        <ActivateButton/>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <Smiley/>
-      <form onSubmit={handleSubmit}>
-        <input value={message} onChange={messageHandler}></input>
-        <button type="submit">PUHU!</button> 
-      </form>
+      <Contents/>
     </div>
   )
 }
