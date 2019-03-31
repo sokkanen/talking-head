@@ -11,6 +11,7 @@
 * Make sure you have latest version of npm and node.js installed on your computer
 * Download .zip
 * Front: run 'npm install' in ppfront -folder.
+* Back: Same as front. run 'npm install' in the folder.
 * Back: .env -file must be placed in ppback-folder root. Modify example with your credentials.
 * To make things more user friendly, it is recommended to create a build from the ppfront.
 	* 1. run 'npm run build' in ppfront -folder

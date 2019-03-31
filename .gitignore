@@ -3,6 +3,9 @@
 # dependencies
 /ppback/node_modules
 /ppfront/node_modules
+/ppfront/package-lock.json
+/ppback/package-lock.json
+
 /.pnp
 .pnp.js
 
