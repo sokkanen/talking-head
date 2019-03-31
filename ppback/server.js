@@ -32,6 +32,9 @@ const onMessageHandler = (target, context, msg, self) => {
 
     if (command === '!paa' && msg.substring(4,5) === ' '){
         message = toTheHead
+        if (message === 'tj'){
+            message = 'Chief executive officer.'
+        }
         console.log('Sending: ', message)
         io.emit('message', message)
     } 
