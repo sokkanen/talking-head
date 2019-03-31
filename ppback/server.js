@@ -1,8 +1,11 @@
 require('dotenv').config()
 const io = require('socket.io')()
 const tmi = require('tmi.js')
+const express = require('express')
+const app = express()
 
 const PORT = process.env.PORT
+const WEBPORT = process.env.WEBPORT
 const CHANNELNAME = process.env.CHANNELNAME
 const BOT_USERNAME = process.env.BOT_USERNAME
 const BOT_TOKEN = process.env.BOT_TOKEN
@@ -55,5 +58,8 @@ io.on('connection', (socket) => {
     })
 })
 
+app.use(express.static('build'))
+
 io.listen(PORT)
-console.log('Kuunnellaan porttia ', PORT)
+app.listen(WEBPORT)
+console.log('Socket portissa ', PORT, ' Client portissa', WEBPORT)
