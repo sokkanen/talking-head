@@ -1,6 +1,9 @@
+require('dotenv').config()
 const io = require('socket.io')()
-//const bot = require('./bot')
-let msg = ''
+const bot = require('./bot')
+let msg = '' // TÄHÄN MUUTTUJAAN BOTILTA TULEVA VIESTI
+
+const PORT = process.env.PORT
 
 io.on('connection', socket => {
     console.log('Connected')
@@ -10,6 +13,5 @@ io.on('connection', socket => {
     }, 1000);
 })
 
-const port = 3003
-io.listen(port)
-console.log('Kuunnellaan porttia ', port)
+io.listen(PORT)
+console.log('Kuunnellaan porttia ', PORT)

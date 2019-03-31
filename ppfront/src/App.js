@@ -8,16 +8,18 @@ const App = () => {
 
   const [message, setMessage] = useState('')
   const [image, setImage] = useState(nottalking)
+  const socket = socketClient('http://localhost:3003')
   const speech = new Speech()
 
   useEffect(() => {
     initializeSpeech()
-    const socket = socketClient('http://localhost:3003')
+  }, [])
+
+  useEffect(() => {
     socket.on('message', (msg) => {
       console.log(msg)
       speak(msg)
     })
-    
   }, [])
 
   const initializeSpeech = () => {
