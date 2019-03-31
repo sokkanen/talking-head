@@ -42,7 +42,7 @@ const App = () => {
   })
   }
 
-  const activateSpeech = () => {
+  const activateSpeech = () => { // User action required by Chrome
     console.log('Speech activated')
     setActivated(true)
   }

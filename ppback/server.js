@@ -30,7 +30,7 @@ const onMessageHandler = (target, context, msg, self) => {
     const command = msg.substring(0, 4)
     const toTheHead = msg.substring(5, msg.length)
 
-    if (command === '!paa'){
+    if (command === '!paa' && msg.substring(4,5) === ' '){
         message = toTheHead
         console.log('Sending: ', message)
         io.emit('message', message)
