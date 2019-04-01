@@ -13,6 +13,9 @@ const App = () => {
 
   useEffect(() => {
     initializeSpeech()
+  }, [])
+
+  useEffect(() => {
     socket.on('message', (msg) => {
       console.log('Head: ', msg)
         speak(msg)
